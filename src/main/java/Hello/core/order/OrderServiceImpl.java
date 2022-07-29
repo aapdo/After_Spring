@@ -1,16 +1,20 @@
 package Hello.core.order;
 
 import Hello.core.discount.DiscountPolicy;
-import Hello.core.discount.FixDiscountPolicy;
-import Hello.core.discount.RateDiscountPolicy;
 import Hello.core.member.Member;
 import Hello.core.member.MemberRepository;
-import Hello.core.member.MemoryMemberRepository;
+
 
 public class OrderServiceImpl implements OrderService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
     //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
     /**
      * 할인 정책을 바꾸려면 위 코드를 주석처리하고 밑에 코드를 다시 써야함
      * OCP, DIP 원칙을 잘 준수한 것 같지만
@@ -19,9 +23,12 @@ public class OrderServiceImpl implements OrderService {
      * OCP : Fix- => Rate- 로 변경하는 것이 OCP 위반이다. 역할과 구현을 분리하면
      *       클라이언트를 안 바꿔도 가능해야함.
      * 밑과 같이 인터페이스만 적으면 두 개를 지킬 수 있다. 하지만 구현체가 없어서 코드를 실행할 수 없다.
-     * 이 문제를 해결하려면 누군가 DiscountPoliy에 구현체를 주입해줘야 한다. 이게 바로 의존관계 주입..ㄷㄷ
+     * 이 문제를 해결하려면 누군가 DiscountPoliy에 구현체를 주입해줘야 한다. 이게 바로 의존관계 주입..ㄷ
+     private final MemberRepository memberRepository = new MemoryMemberRepository();
+     private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+     원래 위 코드처럼 했었음.
      * */
-    private DiscountPolicy discountPolicy;
+    //private DiscountPolicy discountPolicy;
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
