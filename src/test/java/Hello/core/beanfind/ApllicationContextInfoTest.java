@@ -1,6 +1,7 @@
 package Hello.core.beanfind;
 
 import Hello.core.AppConfig;
+import Hello.core.AutoAppConfig;
 import Hello.core.member.MemberService;
 import Hello.core.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;

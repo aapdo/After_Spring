@@ -31,19 +31,16 @@ public class AppConfig {
     //Memory가 두번 호출되는데 싱글톤이 깨질까?
     @Bean
     public MemberService memberService(){
-        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }//역할과
 
     @Bean
     public MemberRepository memberRepository() {
-        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }//구현을 나누어 시인성이 좋아진다.
 
     @Bean
     public OrderService orderService(){
-        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
         //IoC : 제어의 역전 프로그래머가 아닌 AppConfig가 어떤 객체를 생성하고 구현 클래스를 선택할지 정한다.
         //제어가 역전되었다고 해서 제어의 역전이라고함.
